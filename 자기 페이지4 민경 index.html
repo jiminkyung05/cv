@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jiminkyung 소개 페이지</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      color: #222;
+      line-height: 1.6;
+      background-color: #fffaf0;
+    }
+
+    .page {
+      min-height: 100vh;
+      background-color: #fffaf0;
+    }
+
+    .hero {
+      background-color: #fffaf0;
+      color: #111;
+      padding: 80px 20px 55px;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .hero-content {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .profile-shadow {
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 28px;
+      border-radius: 50%;
+      background: #f4eddf;
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+    }
+
+    .profile-shadow::before {
+      content: "";
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #252525;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .profile-shadow::after {
+      content: "";
+      position: absolute;
+      width: 78px;
+      height: 48px;
+      border-radius: 50% 50% 0 0;
+      background: #252525;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      margin-bottom: 14px;
+      letter-spacing: -1px;
+      font-weight: 800;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #444;
+      font-weight: 400;
+    }
+
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 50px 20px 70px;
+    }
+
+    .button-area {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .tab-button {
+      padding: 16px 12px;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      border-radius: 16px;
+      background-color: rgba(255, 255, 255, 0.45);
+      color: #222;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: 0.25s ease;
+    }
+
+    .tab-button:hover {
+      background-color: rgba(255, 255, 255, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .tab-button.active {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-color: rgba(0, 0, 0, 0.35);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    }
+
+    .panel {
+      display: none;
+      background-color: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 22px;
+      padding: 34px;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.07);
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .panel h2 {
+      font-size: 25px;
+      margin-bottom: 20px;
+      color: #111;
+    }
+
+    .info-list {
+      list-style: none;
+    }
+
+    .info-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      font-size: 17px;
+    }
+
+    .info-list li:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      display: inline-block;
+      min-width: 100px;
+      font-weight: 800;
+      color: #222;
+    }
+
+    .interest-text {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .keyword-wrap {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .keyword {
+      padding: 9px 15px;
+      border-radius: 999px;
+      background-color: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      font-size: 15px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    .likes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .like-item {
+      padding: 24px 14px;
+      border-radius: 18px;
+      background-color: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      text-align: center;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .sns-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .sns-link {
+      display: block;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background-color: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: #222;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 700;
+      transition: 0.25s ease;
+    }
+
+    .sns-link:hover {
+      background-color: rgba(255, 255, 255, 0.85);
+      transform: translateY(-2px);
+    }
+
+    .sns-label {
+      display: inline-block;
+      min-width: 100px;
+      color: #111;
+      font-weight: 800;
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px;
+      color: #777;
+      font-size: 14px;
+      background-color: #fffaf0;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 60px 18px 45px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .profile-shadow {
+        width: 94px;
+        height: 94px;
+      }
+
+      .profile-shadow::before {
+        width: 32px;
+        height: 32px;
+        top: 21px;
+      }
+
+      .profile-shadow::after {
+        width: 66px;
+        height: 40px;
+        bottom: 12px;
+      }
+
+      .button-area {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 26px 20px;
+      }
+
+      .likes {
+        grid-template-columns: 1fr;
+      }
+
+      .label {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .sns-label {
+        display: block;
+        margin-bottom: 4px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .content {
+        padding: 38px 14px 55px;
+      }
+
+      .panel h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-content">
+        <div class="profile-shadow"></div>
+        <h1>jiminkyung</h1>
+        <p>사람들의 일상에 특별한 경험을 더하는 아이디어와 공간을 고민합니다</p>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="button-area">
+        <button class="tab-button active" onclick="showPanel('intro', this)">기본소개</button>
+        <button class="tab-button" onclick="showPanel('interest', this)">관심분야</button>
+        <button class="tab-button" onclick="showPanel('likes', this)">좋아하는것</button>
+        <button class="tab-button" onclick="showPanel('sns', this)">SNS</button>
+      </div>
+
+      <section id="intro" class="panel active">
+        <h2>기본소개</h2>
+        <ul class="info-list">
+          <li>
+            <span class="label">이름</span>
+            지민경
+          </li>
+          <li>
+            <span class="label">소속</span>
+            청주대학교 경영학과 3학년
+          </li>
+          <li>
+            <span class="label">목표</span>
+            하루를 무의미하게 보내지는 말자
+          </li>
+        </ul>
+      </section>
+
+      <section id="interest" class="panel">
+        <h2>관심분야</h2>
+        <p class="interest-text">
+          저는 마케팅, 특히 사람들의 관심을 끌고 직접 경험하게 만드는 팝업마케팅에 관심이 있습니다.
+        </p>
+
+        <div class="keyword-wrap">
+          <span class="keyword">팝업마케팅</span>
+          <span class="keyword">브랜드 경험</span>
+          <span class="keyword">트렌드</span>
+          <span class="keyword">소비자 관심</span>
+        </div>
+      </section>
+
+      <section id="likes" class="panel">
+        <h2>좋아하는것</h2>
+        <div class="likes">
+          <div class="like-item">소설읽기</div>
+          <div class="like-item">유행따라가기</div>
+          <div class="like-item">요리</div>
+        </div>
+      </section>
+
+      <section id="sns" class="panel">
+        <h2>SNS</h2>
+        <div class="sns-list">
+          <a
+            class="sns-link"
+            href="https://www.instagram.com/iiiminkyung"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="sns-label">인스타그램</span>
+            @iiiminkyung
+          </a>
+
+          <a
+            class="sns-link"
+            href="https://m.blog.naver.com/iiiminkyung"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="sns-label">블로그</span>
+            https://m.blog.naver.com/iiiminkyung
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 jiminkyung
+    </footer>
+  </div>
+
+  <script>
+    function showPanel(panelId, clickedButton) {
+      const panels = document.querySelectorAll(".panel");
+      const buttons = document.querySelectorAll(".tab-button");
+
+      panels.forEach(function(panel) {
+        panel.classList.remove("active");
+      });
+
+      buttons.forEach(function(button) {
+        button.classList.remove("active");
+      });
+
+      document.getElementById(panelId).classList.add("active");
+      clickedButton.classList.add("active");
+    }
+  </script>
+</body>
+</html>
